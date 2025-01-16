@@ -1,29 +1,29 @@
 "use client";
 
-import { FC, useEffect } from "react";
+import { FC, useEffect, MouseEvent } from "react";
 import Button from "@/components/Button";
 import useTextRevealAnimation from "@/hooks/useTextRevealAnimation";
 import { useInView } from "motion/react";
 
 const navItems = [
   {
-    href: "#",
-    label: "Home",
+    href: "#about",
+    label: "About",
   },
   {
-    href: "#",
+    href: "#project",
     label: "Project",
   },
   {
-    href: "#",
+    href: "#testimonials",
     label: "Testimonials",
   },
   {
-    href: "#",
+    href: "#faqs",
     label: "Faqs",
   },
   {
-    href: "#",
+    href: "#contact",
     label: "Contact",
   },
 ];
@@ -37,6 +37,18 @@ const Footer: FC = () => {
       entranceAnimation();
     }
   }, [inView, entranceAnimation]);
+
+  const handleClickNavItem = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    const url = new URL(e.currentTarget.href);
+    const hash = url.hash;
+
+    const target = document.querySelector(hash);
+
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <footer className="bg-stone-900 text-white" id="contact">
@@ -58,33 +70,47 @@ const Footer: FC = () => {
                 variant="secondary"
                 className="mt-8"
                 iconAfter={
-                  <div className="size-6">
-                    <div className="w-12 h-6 flex">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                      />
-                    </svg>
+                  <div className="size-6 h-6 overflow-hidden">
+                    <div className="w-12 h-6 flex transition-transform duration-300 group-hover/button:-translate-x-1/2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                        />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                        />
+                      </svg>
                     </div>
                   </div>
                 }
               >
-                info@ardani.com
+                info@ardanisetiawan.com
               </Button>
             </div>
             <div className="">
               <nav className="flex flex-col md:items-end gap-8 mt-16 md:mt-0">
                 {navItems.map(({ href, label }) => (
-                  <a href={href} key={label}>
+                  <a href={href} key={label} onClick={handleClickNavItem}>
                     <Button variant="text" className="text-lg">
                       {label}
                     </Button>
